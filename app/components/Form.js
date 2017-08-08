@@ -1,5 +1,6 @@
 var React = require('react');
 var PropTypes = require('prop-types');
+var api = require('./utils/api');
 
 class WeatherInput extends React.Component {
   constructor(props) {
@@ -44,8 +45,8 @@ class WeatherInput extends React.Component {
         />
         <button
           className='weather-btn'
-            type='submit'
-            disabled={!this.state.city}
+          type='submit'
+          disabled={!this.state.city}
         >
           Get Weather
         </button>
