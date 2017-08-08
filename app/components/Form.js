@@ -27,9 +27,10 @@ class WeatherInput extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
 
-    this.props.onSubmit(
-      this.state.city
-    )
+    // this.props.onSubmit(
+    //   this.state.city,
+    //   api.currentWeather(this.state.city)
+    // )
   }
   render() {
     return (
