@@ -24,17 +24,9 @@ class WeatherInput extends React.Component {
     })
   }
 
-  handleSubmit(event) {
-    event.preventDefault();
-
-    // this.props.onSubmit(
-    //   this.state.city,
-    //   api.currentWeather(this.state.city)
-    // )
-  }
   render() {
     return (
-      <form className={this.props.alignment} onSubmit={this.handleSubmit}>
+      <div className={'form-container ' + this.props.alignment}>
         <input
           id='city'
           className='weather-input' 
@@ -46,28 +38,27 @@ class WeatherInput extends React.Component {
         />
         <button
           className='weather-btn'
-          type='submit'
-          disabled={!this.state.city}
+          type='button'
         >
           Get Weather
         </button>
-      </form>
+      </div>
     )
   } 
 }
 
-class Form extends React.Component {
+class div extends React.Component {
   constructor(props) {
     super(props);
   }
 
   render() {
     return (
-      <div className="form">
+      <div className="div">
         <WeatherInput alignment={this.props.alignment} />
       </div>
     )
   }
 }
 
-module.exports = Form;
+module.exports = div;
