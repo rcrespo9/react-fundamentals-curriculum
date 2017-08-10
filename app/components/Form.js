@@ -1,7 +1,7 @@
 var React = require('react');
 var PropTypes = require('prop-types');
 var api = require('./utils/api');
-var Redirect = require('react-router').Redirect;
+var Link = require('react-router-dom').Link;
 
 class Form extends React.Component {
   constructor(props) {
@@ -13,7 +13,6 @@ class Form extends React.Component {
     }
 
     this.handleChange = this.handleChange.bind(this);
-    this.handleOnClick = this.handleOnClick.bind(this);
   }
 
   handleChange(event) {
@@ -26,16 +25,8 @@ class Form extends React.Component {
     })
   }
 
-  handleOnClick() {
-    this.setState({ redirect: true });
-  }
-
   render() {
-    if(this.state.redirect) {
-      var encodeCity = window.encodeURI(this.state.city)
-
-      return <Redirect push to={'/forecast?city=' + encodeCity} />
-    }
+    var encodeCity = window.encodeURI(this.state.city);
 
     return (
       <div className={'form-container ' + this.props.alignment}>
@@ -49,13 +40,14 @@ class Form extends React.Component {
           onChange={this.handleChange}
         />
 
-        <button
+        <Link 
           className='weather-btn'
-          type='button'
-          onClick={this.handleOnClick}
-        >
+          to={{
+            pathname: '/forecast',
+            search: '?city=' + encodeCity
+          }}>
           Get Weather
-        </button>
+        </Link>
       </div>
     )
   } 
