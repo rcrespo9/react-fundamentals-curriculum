@@ -1,16 +1,19 @@
 var React = require('react');
 var PropTypes = require('prop-types');
 var api = require('./utils/api');
+var Redirect = require('react-router').Redirect;
 
-class WeatherInput extends React.Component {
+class Form extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      city: ''
+      city: '',
+      redirect: false
     }
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleOnClick = this.handleOnClick.bind(this);
   }
 
   handleChange(event) {
@@ -23,7 +26,17 @@ class WeatherInput extends React.Component {
     })
   }
 
+  handleOnClick() {
+    this.setState({ redirect: true });
+  }
+
   render() {
+    if(this.state.redirect) {
+      var encodeCity = window.encodeURI(this.state.city)
+
+      return <Redirect push to={'/forecast?city=' + encodeCity} />
+    }
+
     return (
       <div className={'form-container ' + this.props.alignment}>
         <input
@@ -35,9 +48,11 @@ class WeatherInput extends React.Component {
           autoComplete='off'
           onChange={this.handleChange}
         />
+
         <button
           className='weather-btn'
           type='button'
+          onClick={this.handleOnClick}
         >
           Get Weather
         </button>
@@ -46,18 +61,8 @@ class WeatherInput extends React.Component {
   } 
 }
 
-class div extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <div className="div">
-        <WeatherInput alignment={this.props.alignment} />
-      </div>
-    )
-  }
+Form.propTypes = {
+  alignment: PropTypes.string.isRequired
 }
 
-module.exports = div;
+module.exports = Form;
