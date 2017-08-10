@@ -5,14 +5,23 @@ var Route = ReactRouter.Route;
 var Switch = ReactRouter.Switch;
 var Home = require('./Home');
 var Header = require('./Header');
+var Forecast = require('./Forecast');
 
 class App extends React.Component {
   render() {
     return (
-      <div>
-        <Header />
-        <Home />
-      </div>
+      <Router>
+        <div>
+          <Header />
+          <Switch>
+            <Route exact path='/' component={Home} />
+            <Route exact path='/forecast' component={Forecast} />
+            <Route render={function() {
+              return <p>Not Found</p>
+            }} />
+          </Switch>
+        </div>
+      </Router>
     )
   }
 }

@@ -2,6 +2,7 @@
   "name": "react-fundamentals-curriculum",
   "version": "1.0.0",
   "description": "<img src=\"https://tylermcginnis.com/tylermcginnis_glasses-300.png\" width=\"300\" align=\"right\">",
+  "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --open"
   },

@@ -6,8 +6,7 @@ module.exports = {
   entry: './app/index.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'index_bundle.js',
-    // publicPath: '/'
+    filename: 'index_bundle.js'
   },
   module: {
     rules: [
@@ -16,9 +15,10 @@ module.exports = {
       { test: /\.svg$/, use: 'file-loader' }
     ]
   },
-  // devServer: {
-  //   historyApiFallback: true
-  // },
+  devServer: {
+    historyApiFallback: true,
+    publicPath: '/'
+  },
   plugins: [new HtmlWebpackPlugin({
     template: 'app/index.html'
   })]
