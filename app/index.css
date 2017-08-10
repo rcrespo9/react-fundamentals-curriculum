@@ -72,4 +72,10 @@ body {
   cursor: pointer;
 }
 
+.forecast-header {
+  font-size: 65px;
+  text-align: center;
+  font-weight: 100;
+}
+
 
