@@ -14,31 +14,26 @@ ForecastHeader.propTypes = {
   text: PropTypes.string.isRequired
 }
 
-function ForecastGrid(props) {
+function ForecastItem(props) {
+  var isClearSkyIcon = props.item.weather[0].icon === '01dd';
+  var icon = isClearSkyIcon ? '01d' : props.item.weather[0].icon;
+  var formattedDate = moment.unix(props.item.dt).format('dddd, MMMM Do');
+
   return (
-    <div className="forecast-container">
-      {props.list.map(function(item) {
-        var isClearSkyIcon = item.weather[0].icon === '01dd';
-        var icon = isClearSkyIcon ? '01d' : item.weather[0].icon;
-        var formattedDate = moment.unix(item.dt).format('dddd, MMMM Do');
-        
-        return (
-          <figure className="day-container" key={item.dt}>
-            <img 
-              className='day-icon'
-              src={require('../images/weather-icons/' + icon + '.svg')}
-              alt={item.weather[0].description}
-            />
-            <figcaption className="day-date">{formattedDate}</figcaption>
-          </figure>
-        )
-      })}
-    </div>
+    <figure className="day-container" onClick={props.clickHandler}>
+      <img 
+        className='day-icon'
+        src={require('../images/weather-icons/' + icon + '.svg')}
+        alt={props.item.weather[0].description}
+      />
+      <figcaption className="day-date">{formattedDate}</figcaption>
+    </figure>
   )
 }
 
-ForecastGrid.propTypes = {
-  list: PropTypes.array.isRequired
+ForecastItem.propTypes = {
+  clickHandler: PropTypes.func.isRequired,
+  item: PropTypes.object.isRequired
 }
 
 class Forecast extends React.Component {
@@ -67,6 +62,14 @@ class Forecast extends React.Component {
       }.bind(this));
   }
 
+  goToDetail(city) {
+    var encodeCity = window.encodeURI(this.state.city);
+    this.props.history.push({
+      pathname: '/detail/' + encodeCity,
+      state: city
+    })
+  }
+
   render() {
     if(this.state.loading) {
       return <ForecastHeader text='Loading' />
@@ -74,7 +77,11 @@ class Forecast extends React.Component {
       return (
         <div>
           <ForecastHeader text={this.state.city} />
-          <ForecastGrid list={this.state.fiveDayForecast} />
+          <div className="forecast-container">
+            {this.state.fiveDayForecast.map(function(listItem) {
+              return <ForecastItem clickHandler={this.goToDetail.bind(this, listItem)} key={listItem.dt} item={listItem} />
+            }, this)}
+          </div>
         </div>
       )
     }
