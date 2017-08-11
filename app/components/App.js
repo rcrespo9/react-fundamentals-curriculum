@@ -17,7 +17,7 @@ class App extends React.Component {
           <Switch>
             <Route exact path='/' component={Home} />
             <Route exact path='/forecast' component={Forecast} />
-            <Route path='/detail:city' component={Detail} /> 
+            <Route path='/detail/:city' component={Detail} /> 
             <Route render={function() {
               return <p>Not Found</p>
             }} />
